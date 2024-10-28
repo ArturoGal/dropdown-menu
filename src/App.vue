@@ -1,13 +1,26 @@
 <script setup lang="ts">
-import DropdownMenu from './components/dropdown-menu.vue'
+import { ref } from 'vue'
+import Dropdown from './components/dropdown-menu.vue'
+
+const selectedDropdownOption = ref<string>('testing')
 </script>
 
 <template>
   <header></header>
 
   <main>
-    <DropdownMenu
-      :options="['Juan Pérez', 'Luis Gerardo García', 'Martín Martínez']"
-    ></DropdownMenu>
+    <dropdown
+      :options="[
+        'Luis Gerardo García',
+        'Juan Pérez',
+        'Martín Martínez',
+        'Arturo García',
+        'Rodrigo Bentancur',
+        'Cristian Romero',
+        'Pedro Porro',
+      ]"
+      v-model="selectedDropdownOption"
+      @selection-changed="option => (selectedDropdownOption = option)"
+    ></dropdown>
   </main>
 </template>
