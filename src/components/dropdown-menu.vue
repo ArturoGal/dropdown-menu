@@ -53,8 +53,8 @@ const sortedOptions = computed(() =>
         {{ selectedOption || (!showOptions ? 'Elige un usuario' : '') }}
       </div>
       <span class="cursor-pointer flex align-middle" @click="toggleOptions">
-        <img v-if="showOptions" src="./icons/arrow-up.svg" alt="˄" />
-        <img v-else src="./icons/arrow-down.svg" alt="˅" />
+        <img v-if="showOptions" src="../assets/icons/arrow-up.svg" alt="˄" />
+        <img v-else src="../assets/icons/arrow-down.svg" alt="˅" />
       </span>
     </div>
 
@@ -74,13 +74,17 @@ const sortedOptions = computed(() =>
         <div class="inline-flex ml-7 mr-3">
           <img
             class="profile-icon absolute left-4 top-3"
-            src="./icons/profile.svg"
+            src="../assets/icons/profile.svg"
             alt="👤"
           />
           {{ option }}
         </div>
         <div v-if="option === selectedOption" class="inline-flex mx-2">
-          <img src="./icons/check.svg" alt="✓" class="absolute right-3 top-4" />
+          <img
+            src="../assets/icons/check.svg"
+            alt="✓"
+            class="absolute right-3 top-4"
+          />
         </div>
       </div>
     </div>

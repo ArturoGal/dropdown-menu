@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import Dropdown from './components/dropdown-menu.vue'
 
-const selectedDropdownOption = ref<string>('testing')
+const selectedDropdownOption = ref<string>()
 </script>
 
 <template>
@@ -19,7 +19,6 @@ const selectedDropdownOption = ref<string>('testing')
         'Cristian Romero',
         'Pedro Porro',
       ]"
-      v-model="selectedDropdownOption"
       @selection-changed="option => (selectedDropdownOption = option)"
     ></dropdown>
   </main>
