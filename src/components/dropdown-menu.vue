@@ -7,18 +7,17 @@ const props = defineProps<{
   label?: string
 }>()
 
-const emit = defineEmits<{
-  (e: 'selectionChanged', option: string): void
-}>()
+const emit = defineEmits<(e: 'selectionChanged', option: string) => void>()
 
 const selectedOption = ref<string>()
 const showOptions = ref<boolean>(false)
 
 const selectOption = (option: string) => {
-  selectedOption.value = option
-  toggleOptions()
-  emit('selectionChanged', option)
-  setTimeout(toggleOptions, 400)
+  setTimeout(() => {
+    emit('selectionChanged', option)
+    selectedOption.value = option
+    toggleOptions()
+  }, 400)
 }
 
 const toggleOptions = () => {
@@ -38,7 +37,7 @@ const sortedOptions = computed(() =>
   <div class="dropdown relative inline-block text-left w-full">
     <div
       v-if="showOptions && hint"
-      class="absolute -top-2 text-xs left-2 bg-white text-gray-500 px-0.5"
+      class="legend absolute -top-2 text-xs left-2 bg-white text-gray-500 px-0.5"
     >
       {{ hint }}
     </div>
@@ -52,11 +51,11 @@ const sortedOptions = computed(() =>
         'selected-option rounded-md bg-white px-3 py-2 min-w-56 w-full text-sm ring-1 ring-inset ring-gray-300',
       ]"
     >
-      <div class="h-5 mr-5 overflow-hidden whitespace-nowrap">
+      <div class="hint h-5 mr-5 overflow-hidden whitespace-nowrap">
         {{ selectedOption || (!showOptions && hint ? 'Elige un usuario' : '') }}
       </div>
       <span
-        class="cursor-pointer absolute top-4 right-3"
+        class="toggle cursor-pointer absolute top-4 right-3"
         @click="toggleOptions"
       >
         <svg
@@ -96,7 +95,7 @@ const sortedOptions = computed(() =>
     </div>
     <div
       v-if="!showOptions"
-      class="text-xs left-2 bg-white text-gray-500 pl-3 pt-0.5 pb-1"
+      class="label text-xs left-2 bg-white text-gray-500 pl-3 pt-0.5 pb-1"
     >
       {{ label }}
     </div>
@@ -108,13 +107,13 @@ const sortedOptions = computed(() =>
       <div
         :class="[
           { 'font-bold': selectedOption === option },
-          'relative hover:text-gray-900 hover:font-bold text-gray-800 block px-4 py-2 text-sm',
+          'option-wrapper relative hover:bg-gray-100 text-gray-800 block px-4 py-2 text-sm',
         ]"
         v-for="(option, index) in sortedOptions"
         :key="index"
         @click="selectOption(option)"
       >
-        <div class="inline-flex ml-7 mr-3">
+        <div class="option inline-flex ml-7 mr-3">
           <svg
             class="profile-icon absolute left-4 top-3"
             width="14"
@@ -134,9 +133,12 @@ const sortedOptions = computed(() =>
 
           {{ option }}
         </div>
-        <div v-if="option === selectedOption" class="inline-flex mx-2">
+        <div
+          v-if="option === selectedOption"
+          class="check-icon-wrapper inline-flex mx-2"
+        >
           <svg
-            class="absolute right-3 top-4"
+            class="check-icon absolute right-3 top-4"
             width="12"
             height="8"
             viewBox="0 0 12 8"
