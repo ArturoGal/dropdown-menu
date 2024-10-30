@@ -3,6 +3,8 @@ import { ref, computed } from 'vue'
 
 const props = defineProps<{
   options: Array<string>
+  hint?: string
+  label?: string
 }>()
 
 const emit = defineEmits<{
@@ -34,10 +36,10 @@ const sortedOptions = computed(() =>
 <template>
   <div class="dropdown relative inline-block text-left w-full">
     <div
-      v-if="showOptions"
+      v-if="showOptions && hint"
       class="absolute -top-2 text-xs left-2 bg-white text-gray-500 px-0.5"
     >
-      Elige un usuario
+      {{ hint }}
     </div>
     <div
       :class="[
@@ -50,16 +52,22 @@ const sortedOptions = computed(() =>
       ]"
     >
       <div class="h-5">
-        {{ selectedOption || (!showOptions ? 'Elige un usuario' : '') }}
+        {{ selectedOption || (!showOptions && hint ? 'Elige un usuario' : '') }}
       </div>
       <span class="cursor-pointer flex align-middle" @click="toggleOptions">
-        <img v-if="showOptions" src="./icons/arrow-up.svg" alt="˄" />
-        <img v-else src="./icons/arrow-down.svg" alt="˅" />
+        <img v-if="showOptions" src="./assets/icons/arrow-up.svg" alt="˄" />
+        <img v-else src="./assets/icons/arrow-down.svg" alt="˅" />
       </span>
+    </div>
+    <div
+      v-if="!showOptions"
+      class="text-xs left-2 bg-white text-gray-500 pl-3 pt-0.5 pb-1"
+    >
+      {{ label }}
     </div>
 
     <div
-      class="options-list right-0 z-10 mt-1 min-w-56 w-full origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none cursor-pointer"
+      class="options-list right-0 z-10 mt-1 min-w-56 w-full max-h-56 overflow-y-scroll origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none cursor-pointer"
       v-if="showOptions"
     >
       <div
@@ -74,17 +82,38 @@ const sortedOptions = computed(() =>
         <div class="inline-flex ml-7 mr-3">
           <img
             class="profile-icon absolute left-4 top-3"
-            src="./icons/profile.svg"
+            src="./assets/icons/profile.svg"
             alt="👤"
           />
           {{ option }}
         </div>
         <div v-if="option === selectedOption" class="inline-flex mx-2">
-          <img src="./icons/check.svg" alt="✓" class="absolute right-3 top-4" />
+          <img
+            src="./assets/icons/check.svg"
+            alt="✓"
+            class="absolute right-3 top-4"
+          />
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+</style>

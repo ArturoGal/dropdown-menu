@@ -26,5 +26,7 @@ export const Default: Story = {
       'Cristian Romero',
       'Pedro Porro',
     ],
+    hint: 'Elige un usuario',
+    label: 'Usuarios registrados',
   },
 }
