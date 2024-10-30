@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import Dropdown from './components/dropdown-menu.vue'
+// import Dropdown from './components/dropdown-menu.vue'
+import DropdownSearch from './components/dropdown-search-menu.vue'
 
 const selectedDropdownOption = ref<string>()
 </script>
@@ -10,7 +11,7 @@ const selectedDropdownOption = ref<string>()
 
   <main>
     <div class="w-60">
-      <dropdown
+      <dropdown-search
         :options="[
           'Luis Gerardo García',
           'Juan Pérez',
@@ -23,7 +24,7 @@ const selectedDropdownOption = ref<string>()
         hint="Elige un usuario"
         label="Usuarios registrados"
         @selection-changed="option => (selectedDropdownOption = option)"
-      ></dropdown>
+      ></dropdown-search>
     </div>
   </main>
 </template>
