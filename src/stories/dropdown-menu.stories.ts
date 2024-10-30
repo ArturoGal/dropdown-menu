@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import DropdownMenu from './dropdown-menu.vue'
 
 const meta = {
-  title: 'Example/DropdownMenu',
+  title: 'DropdownMenu',
   component: DropdownMenu,
   tags: ['autodocs'],
   argTypes: {},
