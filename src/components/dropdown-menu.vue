@@ -48,15 +48,49 @@ const sortedOptions = computed(() =>
           'text-gray-500': !selectedOption,
           'hover:shadow-md': !showOptions,
         },
-        'selected-option inline-flex justify-between gap-x-1.5 rounded-md bg-white px-3 py-2 min-w-56 w-full text-sm ring-1 ring-inset ring-gray-300',
+        'selected-option rounded-md bg-white px-3 py-2 min-w-56 w-full text-sm ring-1 ring-inset ring-gray-300',
       ]"
     >
-      <div class="h-5">
+      <div class="h-5 mr-5 overflow-hidden whitespace-nowrap">
         {{ selectedOption || (!showOptions && hint ? 'Elige un usuario' : '') }}
       </div>
-      <span class="cursor-pointer flex align-middle" @click="toggleOptions">
-        <img v-if="showOptions" src="../assets/icons/arrow-up.svg" alt="˄" />
-        <img v-else src="../assets/icons/arrow-down.svg" alt="˅" />
+      <span
+        class="cursor-pointer absolute top-4 right-3"
+        @click="toggleOptions"
+      >
+        <svg
+          v-if="showOptions"
+          width="14"
+          height="9"
+          viewBox="0 0 14 9"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M1.16665 7.5L6.99998 1.66667L12.8333 7.5"
+            stroke="#6B7280"
+            stroke-width="1.66667"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+
+        <svg
+          v-else
+          width="14"
+          height="9"
+          viewBox="0 0 14 9"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12.8333 1.5L7 7.33333L1.16666 1.5"
+            stroke="#6B7280"
+            stroke-width="1.66667"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
       </span>
     </div>
     <div
@@ -80,19 +114,42 @@ const sortedOptions = computed(() =>
         @click="selectOption(option)"
       >
         <div class="inline-flex ml-7 mr-3">
-          <img
+          <svg
             class="profile-icon absolute left-4 top-3"
-            src="../assets/icons/profile.svg"
-            alt="👤"
-          />
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M2.41402 10.8692C3.76844 10.1036 5.3332 9.66667 7 9.66667C8.6668 9.66667 10.2316 10.1036 11.586 10.8692M9 5.66667C9 6.77124 8.10457 7.66667 7 7.66667C5.89543 7.66667 5 6.77124 5 5.66667C5 4.5621 5.89543 3.66667 7 3.66667C8.10457 3.66667 9 4.5621 9 5.66667ZM13 7C13 10.3137 10.3137 13 7 13C3.68629 13 1 10.3137 1 7C1 3.68629 3.68629 1 7 1C10.3137 1 13 3.68629 13 7Z"
+              :stroke="selectedOption === option ? 'black' : '#6B7280'"
+              stroke-width="1.33333"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+
           {{ option }}
         </div>
         <div v-if="option === selectedOption" class="inline-flex mx-2">
-          <img
-            src="../assets/icons/check.svg"
-            alt="✓"
+          <svg
             class="absolute right-3 top-4"
-          />
+            width="12"
+            height="8"
+            viewBox="0 0 12 8"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1.33337 4.66669L4.00004 7.33335L10.6667 0.666687"
+              stroke="#0E7490"
+              stroke-width="1.33333"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
         </div>
       </div>
     </div>
