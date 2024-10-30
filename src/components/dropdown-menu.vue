@@ -18,6 +18,7 @@ const selectOption = (option: string) => {
   selectedOption.value = option
   toggleOptions()
   emit('selectionChanged', option)
+  setTimeout(toggleOptions, 400)
 }
 
 const toggleOptions = () => {
