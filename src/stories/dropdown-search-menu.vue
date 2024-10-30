@@ -9,13 +9,15 @@ const props = defineProps<{
 
 const emit = defineEmits<(e: 'selectionChanged', option: string) => void>()
 
-const selectedOption = ref<string>()
+const selectedOption = ref<string>(props.hint || '')
 const showOptions = ref<boolean>(false)
+const search = ref<string>()
 
 const selectOption = (option: string) => {
   setTimeout(() => {
     emit('selectionChanged', option)
     selectedOption.value = option
+    search.value = option
     toggleOptions()
   }, 400)
 }
@@ -31,10 +33,20 @@ const sortedOptions = computed(() =>
     return a > b ? 1 : -1
   }),
 )
+
+const filteredOptions = computed(() => {
+  return selectedOption.value === search.value
+    ? sortedOptions.value
+    : sortedOptions.value.filter(
+        option =>
+          !search.value ||
+          option.toLowerCase().includes(search.value.toLowerCase().trim()),
+      )
+})
 </script>
 
 <template>
-  <div class="dropdown relative inline-block text-left w-full">
+  <div class="dropdown-search relative inline-block text-left w-full">
     <div
       v-if="showOptions && hint"
       class="legend absolute -top-2 text-xs left-2 bg-white text-gray-500 px-0.5"
@@ -50,14 +62,16 @@ const sortedOptions = computed(() =>
         },
         'selected-option rounded-md bg-white px-3 py-2 min-w-56 w-full text-sm ring-1 ring-inset ring-gray-300',
       ]"
+      @click="toggleOptions"
     >
-      <div class="hint h-5 mr-5 overflow-hidden whitespace-nowrap">
-        {{ selectedOption || (!showOptions && hint ? hint : '') }}
-      </div>
-      <span
-        class="toggle cursor-pointer absolute top-4 right-3"
-        @click="toggleOptions"
-      >
+      <input
+        v-model="search"
+        :placeholder="hint"
+        type="text"
+        class="search text-gray-900 focus:outline-none"
+        onfocus="this.placeholder=''"
+      />
+      <span class="toggle cursor-pointer absolute top-4 right-3">
         <svg
           v-if="showOptions"
           width="14"
@@ -94,22 +108,22 @@ const sortedOptions = computed(() =>
       </span>
     </div>
     <div
-      v-if="!showOptions"
+      v-if="!showOptions || !filteredOptions.length"
       class="label text-xs left-2 bg-white text-gray-500 pl-3 pt-0.5 pb-1"
     >
-      {{ label }}
+      {{ filteredOptions.length ? label : 'No results' }}
     </div>
 
     <div
       class="options-list right-0 z-10 mt-1 min-w-56 w-full max-h-56 overflow-y-scroll origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none cursor-pointer"
-      v-if="showOptions"
+      v-if="showOptions && filteredOptions.length"
     >
       <div
         :class="[
           { 'font-bold': selectedOption === option },
           'option-wrapper relative hover:bg-gray-100 text-gray-800 block px-4 py-2 text-sm',
         ]"
-        v-for="(option, index) in sortedOptions"
+        v-for="(option, index) in filteredOptions"
         :key="index"
         @click="selectOption(option)"
       >
