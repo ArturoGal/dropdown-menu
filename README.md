@@ -1,39 +1,51 @@
 # dropdown-menu
 
-This template should help get you started developing with Vue 3 in Vite.
+## How to use this component
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
+### Install in your project
 
 ```sh
-npm install
+npm install @arturogal/dropdown-menu
 ```
 
-### Compile and Hot-Reload for Development
+### Import in your main.ts or main.js file
 
 ```sh
-npm run dev
+import DropdownMenu from '@arturogal/dropdown-menu'
 ```
 
-### Type-Check, Compile and Minify for Production
+### Import styles in your maint.ts or main.js file
 
 ```sh
-npm run build
+import '@arturogal/dropdown-menu/dist/style.css'
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+### Add it to your app in main.ts or main.js file
 
 ```sh
-npm run lint
+import { createApp } from 'vue'
+import App from './App.vue'
+
+const app = createApp(App)
+app.mount('#app')
+app.use(DropdownMenu)
+```
+
+### Use the web component in your app, wherever you want
+
+```sh
+<dropdown
+    :options="[
+        'Luis Gerardo García',
+        'Juan Pérez',
+        'Martín Martínez',
+        'Arturo García',
+        'Rodrigo Bentancur',
+        'Cristian Romero',
+        'Pedro Porro',
+    ]"
+    hint="Elige un usuario"
+    label="Usuarios registrados"
+    @selection-changed="(option: string) => (selectedDropdownOption = option)">
+</dropdown>
 ```
